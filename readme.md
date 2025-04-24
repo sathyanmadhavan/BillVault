@@ -1,4 +1,4 @@
-# Bill OCR Web App
+# BillVaultWeb App
 
 This project is a simple Flask web application that allows users to upload images of bills, extract key information using OCR (Optical Character Recognition), and store the results in a MongoDB database.
 
