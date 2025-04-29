@@ -26,7 +26,7 @@ Before running the project, ensure you have the following installed on your mach
 1. **Clone this repository:**
 
    ```bash
-   git clone https://github.com/sathyanmadhavan/bill-scanner.git
+   git clone https://github.com/sathyanmadhavan/BillVault.git
    cd BillVault
 
 2. **Create and activate a virtual environment:**
