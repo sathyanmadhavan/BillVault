@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Bills</title>
+</head>
+<body>
+    <h2>Search Bills</h2>
+    <form method="POST">
+        <input type="text" name="query" placeholder="Search by vendor, amount, or date" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+        <h3>Results:</h3>
+        <ul>
+            {% for bill in results %}
+                <li><strong>{{ bill.vendor }}</strong> - ₹{{ bill.amount }} on {{ bill.date }}</li>
+            {% endfor %}
+        </ul>
+    {% elif searched %}
+        <p>No results found for "{{ searched }}"</p>
+    {% endif %}
+</body>
+</html>

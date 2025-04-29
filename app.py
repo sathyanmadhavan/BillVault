@@ -1,5 +1,3 @@
-"""Flask app to upload bills, perform OCR using Tesseract, and store results in MongoDB."""
-
 import os
 import re
 from flask import Flask, request, render_template
@@ -32,8 +30,8 @@ def extract_fields(text):
     }
 
 @app.route('/', methods=['GET', 'POST'])
+
 def index():
-    """Main route to upload bill, perform OCR, and save to database."""
     if request.method == 'POST':
         file = request.files['bill']
         if file:
@@ -52,11 +50,28 @@ def index():
             return (
                 f"<h3>OCR Text saved to DB</h3>"
                 f"<pre>{text}</pre>"
-                f"<a href='/'>Upload Another</a> | <a href='/bills'>View Bills</a>"
+                f"<a href='/'>Upload Another</a> | <a href='/query'>Run Query</a>"
             )
 
     return render_template('index.html')
 
+@app.route('/query', methods=['GET', 'POST'])
+def query_bills():
+    results = []
+    searched = ""
+    if request.method == 'POST':
+        searched = request.form["query"]
+        regex = re.compile(re.escape(searched), re.IGNORECASE)
+
+        results = list(collection.find({
+            "$or": [
+                {"vendor": regex},
+                {"date": regex},
+                {"amount": {"$regex": regex}}
+            ]
+        }))
+
+    return render_template("query.html", results=results, searched=searched)
 
 if __name__ == '__main__':
     app.run(debug=True)
